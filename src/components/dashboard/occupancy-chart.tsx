@@ -26,7 +26,7 @@ export function OccupancyChart({ data, today, metric }: { data: Point[]; today: 
   return (
     <div className="h-64 w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
+        <ComposedChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="occ" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="var(--chart-1)" stopOpacity={0.18} />
@@ -48,7 +48,7 @@ export function OccupancyChart({ data, today, metric }: { data: Point[]; today: 
             tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
             domain={metric === "occupancy" ? [0, 100] : [0, "auto"]}
             tickFormatter={(v) => (metric === "occupancy" ? `${v} %` : `${Math.round(v / 1000)} k€`)}
-            width={48}
+            width={52}
           />
           <Tooltip content={<Tip metric={metric} />} cursor={{ stroke: "var(--muted-foreground)", strokeOpacity: 0.4 }} />
           <ReferenceLine x={today} stroke="var(--gold)" strokeWidth={1.5} label={{ value: "Aujourd'hui", position: "insideTopRight", fontSize: 10, fill: "var(--muted-foreground)" }} />

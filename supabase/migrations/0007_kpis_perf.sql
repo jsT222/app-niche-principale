@@ -142,3 +142,17 @@ begin
 end $$;
 revoke execute on function public.seed_demo() from anon, authenticated;
 revoke execute on function public.seed_spread_recent() from anon, authenticated;
+
+-- (0009) étale aussi les dates d'annulation récentes
+create or replace function public.seed_spread_recent()
+returns void language sql security definer set search_path = public as $$
+  update reservations
+     set created_at = now() - make_interval(mins => (30 + random() * 60 * 24 * 4)::int),
+         updated_at = now() - interval '10 minutes'
+   where created_at > now() - interval '40 minutes';
+  update reservations
+     set cancelled_at = greatest(created_at + interval '2 hours', now() - make_interval(mins => (45 + random() * 60 * 24 * 20)::int))
+   where cancelled_at > now() - interval '40 minutes';
+  update reservations set cancelled_at = now() - make_interval(mins => (45 + random() * 600)::int)
+   where cancelled_at > now();
+$$;
