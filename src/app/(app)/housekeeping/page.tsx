@@ -22,7 +22,7 @@ export default async function HousekeepingPage() {
     const f = flags.get(r.room_id) ?? { arrival: false, departure: false, occupied: false };
     if (r.check_in === today && r.status !== "checked_out") f.arrival = true;
     if (r.check_out === today) f.departure = true;
-    if (r.status === "checked_in" && r.check_out > today) f.occupied = true;
+    if (r.status === "checked_in" && r.check_in < today && r.check_out > today) f.occupied = true;
     flags.set(r.room_id, f);
   });
   const list = ((rooms ?? []) as unknown as HkRoom[]).map((r) => ({ ...r, ...(flags.get(r.id) ?? { arrival: false, departure: false, occupied: false }) }));

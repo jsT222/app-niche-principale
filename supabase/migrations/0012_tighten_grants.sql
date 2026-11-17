@@ -1,0 +1,20 @@
+-- Retrait des droits d'exécution inutiles (fonctions internes appelées par des fonctions security definer)
+revoke execute on function public.automation_enabled(uuid, text) from public, anon, authenticated;
+revoke execute on function public.find_free_room(uuid, date, date) from public, anon, authenticated;
+revoke execute on function public.guest_name(uuid) from public, anon, authenticated;
+revoke execute on function public.room_number(uuid) from public, anon, authenticated;
+revoke execute on function public.night_price(uuid, date) from public, anon, authenticated;
+revoke execute on function public.on_reservation_change() from public, anon, authenticated;
+revoke execute on function public.run_automation_now(uuid) from public, anon;
+revoke execute on function public.set_automation_enabled(uuid, boolean) from public, anon;
+revoke execute on function public.staff_create_booking(uuid, uuid, date, date, int, int, text, text, text, text, text, booking_channel, reservation_status, text) from public, anon;
+revoke execute on function public.dashboard_kpis(uuid[], date) from public, anon;
+revoke execute on function public.my_hotel_ids() from public, anon;
+revoke execute on function public.has_hotel_role(uuid, app_role[]) from public, anon;
+grant execute on function public.run_automation_now(uuid) to authenticated;
+grant execute on function public.set_automation_enabled(uuid, boolean) to authenticated;
+grant execute on function public.my_hotel_ids() to authenticated;
+grant execute on function public.has_hotel_role(uuid, app_role[]) to authenticated;
+alter function public.touch_updated_at() set search_path = public;
+alter function public.night_stats(uuid[], date, date) set search_path = public;
+alter function public.pick(text[]) set search_path = public;
