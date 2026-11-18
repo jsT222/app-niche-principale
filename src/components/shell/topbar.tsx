@@ -91,13 +91,11 @@ export function Topbar({
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>{fullName}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <form action="/auth/signout" method="post">
-              <button type="submit" className="w-full">
-                <DropdownMenuItem>
-                  <LogOut /> Changer de profil
-                </DropdownMenuItem>
-              </button>
-            </form>
+            <DropdownMenuItem asChild>
+              <a href="/auth/signout">
+                <LogOut /> Changer de profil
+              </a>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

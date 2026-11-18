@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { BookingEngine } from "./booking-engine";
 
@@ -15,7 +15,7 @@ export default async function BookingPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const supabase = await createClient();
   const { data } = await supabase.rpc("public_hotel", { p_slug: slug });
-  if (!data) notFound();
+  if (!data) redirect("/reserver");
   return <BookingEngine slug={slug} hotel={data as Hotel} />;
 }
 
